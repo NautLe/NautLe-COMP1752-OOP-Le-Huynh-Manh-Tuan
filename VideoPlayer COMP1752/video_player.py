@@ -20,6 +20,9 @@ def update_videos_clicked():
     UpdateVideos(tk.Toplevel(window), window)
     status_lbl.configure(text="")
 
+def change_theme(theme):
+    style.theme_use(theme)
+
 # Set up the main window
 window = tk.Tk()
 window.geometry("800x250")
@@ -54,6 +57,19 @@ update_videos_btn.grid(row=0, column=2, padx=10)
 # Status label
 status_lbl = ttk.Label(window, text="", style='TLabel')
 status_lbl.pack(pady=20)
+
+# Theme selection frame
+theme_frame = tk.Frame(window)
+theme_frame.pack(pady=10)
+
+# Theme selection label
+theme_lbl = ttk.Label(theme_frame, text="Change Theme: ", style='TLabel')
+theme_lbl.grid(row=0, column=0, padx=5)
+
+# Dropdown menu for theme selection
+theme_var = tk.StringVar(value=style.theme_use())
+theme_dropdown = ttk.OptionMenu(theme_frame, theme_var, style.theme_use(), *style.theme_names(), command=change_theme)
+theme_dropdown.grid(row=0, column=1, padx=5)
 
 # Start the main loop
 window.mainloop()
