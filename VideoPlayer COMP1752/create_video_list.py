@@ -231,43 +231,7 @@ class CreateVideoList():
 
             # Check if the entered video number exists in the video library
             if video_number not in lib.library:
-                msb.showerror("Error", "Video number does not exist in def add_to_playlist(self):
-    try:
-        # Check if an item is selected in the video_listbox
-        if self.video_listbox.curselection():
-            video_number = self.video_list[self.video_listbox.curselection()[0]]
-        else:
-            # If no video is selected from the listbox, use the video number from the entry field instead.
-            video_number = self.txt_vid_num.get().strip()
-
-        # Check if the entered video number exists in the video library
-        if video_number not in lib.library:
-            msb.showerror("Error", "Video number does not exist in the video library")
-            return
-
-        # Check if the video number is already in the playlist
-        if video_number in self.playlist:
-            msb.showerror("Error", "Video already in playlist")
-            return
-
-        # Add video number to the playlist
-        self.playlist.append(video_number)
-        
-        # Get video duration and update the total duration
-        video_duration = lib.get_duration(video_number)
-        self.total_duration += video_duration
-        self.update_total_duration()
-        
-        # Update the playlist listbox information
-        self.update_playlist_text()
-        msb.showinfo('Success', 'Video added to playlist successfully')
-
-    except ValueError:
-        msb.showerror("Error", "Invalid video number. Please enter a valid integer.")
-    
-    except IndexError:
-        msb.showerror("Error", "No video selected from the listbox.")
-video library")
+                msb.showerror("Error", "Video number does not exist in video library")
                 return
 
             # Check if the video number is already in the playlist
@@ -292,6 +256,19 @@ video library")
         
         except IndexError:
             msb.showerror("Error", "No video selected from the listbox.")
+
+    def display_cover_photo(self, video_number):
+        script_directory = "C:\\Users\\ADMIN\\Desktop\\VideoPlayer COMP1752" 
+        cover_photo_path = script_directory + '\\' + "covers" + '\\' + str(video_number) + '.jpg' # Construct the path to the cover photo
+        try:
+            image = Image.open(cover_photo_path) # Open the cover photo
+            image.thumbnail((150, 200))  # Resize the cover photo
+        except FileNotFoundError as e: # If the cover photo is not found
+            msb.showerror('Error', f"Cover photo not found for video number {video_number}")
+            return
+        photo = ImageTk.PhotoImage(image)# Convert the Image object to a PhotoImage object
+        self.cover_photo_label.config(image=photo, width=150, height=200)# Update the PhotoImage of the cover photo label
+        self.cover_photo_label.image = photo # Update the PhotoImage each time the cover photo label is updated
 
 
 
